@@ -12,12 +12,12 @@ router.use(cors({origin:true,credentials: true}));
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  fsExists(__dirname + "../../../" + "items.json",function(err,result){
+  fsExists(__dirname + "/" + "items.json",function(err,result){
     console.log(result);
     if(result){
       console.log ("the entry exists");
       //res.send('respond with a resource');
-        fs.readFile( __dirname + "../../../" + "items.json", 'utf8', function (err, data) {
+        fs.readFile( __dirname + "/" + "items.json", 'utf8', function (err, data) {
           console.log( data );
         res.end( data );
           
@@ -25,12 +25,12 @@ router.get('/', function(req, res, next) {
     }else
       {
         console.log ("the entry does not exist");
-        fs.open(__dirname + "../../../" + "items.json","w",function(err,rs){
+        fs.open(__dirname + "/" + "items.json","w",function(err,rs){
           if(err) throw err;
           if(rs){
             console.log("File Created!!");
             data = [{"name":"abc","price":150}];
-            fs.writeFile( __dirname + "../../../" + "items.json", JSON.stringify(data), function (err, data) {
+            fs.writeFile( __dirname + "/" + "items.json", JSON.stringify(data), function (err, data) {
               if (err) throw err;
               console.log('item added!');
             });
@@ -53,7 +53,7 @@ router.put('/addItem', function (req, res) {
  // console.log(q);
   item = req.body;
   // First read existing users.
-  fs.readFile( __dirname + "../../../" + "items.json", 'utf8', function (err, data) {
+  fs.readFile( __dirname + "/" + "items.json", 'utf8', function (err, data) {
    
     data = JSON.parse( data );
     console.log(item);
@@ -62,7 +62,7 @@ router.put('/addItem', function (req, res) {
    // console.log(item);
     data.push(item);
     console.log(data);
-    fs.writeFile( __dirname + "../../../" + "items.json", JSON.stringify(data), function (err, data) {
+    fs.writeFile( __dirname + "/" + "items.json", JSON.stringify(data), function (err, data) {
       if (err) throw err;
       console.log('item added!');
     });
@@ -88,14 +88,14 @@ router.delete('/deleteItem', function (req, res) {
   var id = q.query.id;
 
   // First read existing users.
-  fs.readFile( __dirname + "../../../" + "items.json", 'utf8', function (err, data) {
+  fs.readFile( __dirname + "/" + "items.json", 'utf8', function (err, data) {
       data = JSON.parse( data );
       data.splice(id,1);
       // delete data["user" + 2];
       
       console.log( data );
 
-      fs.writeFile( __dirname + "../../../" + "items.json", JSON.stringify(data), function (err, data) {
+      fs.writeFile( __dirname + "/" + "items.json", JSON.stringify(data), function (err, data) {
         if (err) throw err;
         console.log('Updated!');
       });
